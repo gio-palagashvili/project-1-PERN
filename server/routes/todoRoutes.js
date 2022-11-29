@@ -3,7 +3,7 @@ import db from "../config/db.js";
 
 const router = express.Router();
 
-router
+export default router
     .post("/todos", async (req, res) => {
         const description = req.body.description;
         const createTodo = await db.query("insert into todo (description) values ($1) returning *", [description]);
@@ -19,5 +19,3 @@ router
         const editTodo = await db.query("delete todo where todo_id = $1  returning *", [req.params.id]);
         res.json(editTodo.rows);
     });
-
-export default router;

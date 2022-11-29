@@ -36,6 +36,7 @@ export const login = async (req, res) => {
         const user = await db.query("select * from users_tbl where email = $1", [email]);
         if (user.rowCount != 0) {
             if (await bcrypt.compare(password, user.rows[0].password)) {
+                user.rows[0].password = null;
                 res.status(200).json({
                     user: user.rows[0],
                     token: jwt.sign({ user: user.rows, }, process.env.JWT, { expiresIn: "4d" }),
