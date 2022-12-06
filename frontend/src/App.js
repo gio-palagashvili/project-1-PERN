@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
+import Home from './pages/home';
+import { UserContext } from './context/AppContext';
 
 const App = () => {
+  const [initial, setInitial] = useState({
+    user: JSON.parse(localStorage.getItem("user"))
+      ? JSON.parse(localStorage.getItem("user"))
+      : null,
+    message: "",
+    isError: false,
+    isLoading: false,
+  });
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+      <UserContext.Provider value={{ initial, setInitial }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </UserContext.Provider>
+    </BrowserRouter >
   )
 }
 
