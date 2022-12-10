@@ -11,6 +11,8 @@ const App = () => {
       ? JSON.parse(localStorage.getItem("user"))
       : null,
     message: "",
+    pages: ["Home", "Packages", "Profile"],
+    currentPage: "Home",
     isError: false,
     isLoading: false,
   });

@@ -13,13 +13,11 @@ const Home = () => {
     if (!initial.user) {
       navigate("/login");
     }
-    console.log(initial);
   }, []);
 
   return (
     <div className="w-[65%] mx-auto">
       <Nav />
-      <User user={initial} />
     </div>
   );
 };
