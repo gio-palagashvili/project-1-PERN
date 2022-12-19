@@ -20,7 +20,6 @@ export const register = async (req, res) => {
 
             res.status(200).json({
                 token: jwt.sign({ user: createUser.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
-                user: createUser.rows[0],
                 status: "success"
             });
 
@@ -34,7 +33,6 @@ export const register = async (req, res) => {
 // POST /user/login
 export const login = async (req, res) => {
     let { email, password } = req.body;
-    if (!email || !password) res.status(400).json({ message: "invalid data", status: "failed" });
     try {
         const user = await db.query("select * from users_tbl where email = $1", [email]);
         if (user.rowCount != 0) {
@@ -42,7 +40,6 @@ export const login = async (req, res) => {
                 delete user.rows[0].password;
                 res.status(200).json({
                     token: jwt.sign({ user: user.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
-                    user: user.rows[0],
                     status: "success"
                 });
             } else res.status(404).json({ message: "incorect credentials", status: "failed" });

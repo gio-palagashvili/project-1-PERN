@@ -35,7 +35,6 @@ const Register = () => {
       })
         .then((s) => {
           navigate("/login");
-          console.log("ss");
         })
         .catch((err) => {
           console.log(err);

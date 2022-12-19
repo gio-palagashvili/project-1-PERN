@@ -33,7 +33,7 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify(s.data.token));
           setInitial({
             ...initial,
-            user: s.data,
+            user: s.data.token,
           });
         }
       })
