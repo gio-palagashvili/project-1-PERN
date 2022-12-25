@@ -4,27 +4,29 @@ import bcrypt from "bcrypt"
 
 // post /user/register
 export const register = async (req, res) => {
-    let { email, password, username } = req.body;
-    if (!username || !email || !password) res.status(400).send("invalid data");
+    let { email, password, firstName, lastName } = req.body;
+    if (!email || !password || !lastName || !firstName) res.status(400).json({ message: "invalid data", status: "failed" });
+
     try {
-        const user = await db.query("SELECT FROM users_tbl WHERE email = $1", [email]);
-
+        const user = await db.query('SELECT FROM users_tbl WHERE "firstName" = $1 and "lastName" = $2', [firstName, lastName]);
         if (user.rowCount == 0) {
-            const salt = await bcrypt.genSalt(10);
-            password = await bcrypt.hash(password, salt);
+            const userEmail = await db.query("SELECT FROM users_tbl WHERE email = $1", [email]);
+            if (userEmail.rowCount === 0) {
+                const salt = await bcrypt.genSalt(10);
+                password = await bcrypt.hash(password, salt);
 
-            const createUser = await
-                db.query("insert into users_tbl(username,email,password,role) values($1,$2,$3,'user') returning user_id,email, username, role"
-                    , [username, email, password]);
-            delete createUser.rows[0].password;
-
-            res.status(200).json({
-                token: jwt.sign({ user: createUser.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
-                status: "success"
-            });
-
+                const createUser = await
+                    db.
+                        query('insert into users_tbl(email, password, role, "firstName", "lastName") values($1,$2,$3,$4,$5) returning "lastName", "firstName", email, role'
+                            , [email, password, 'user', firstName, lastName]);
+                // delete createUser.rows[0].password;
+                res.status(200).json({
+                    token: jwt.sign({ user: createUser.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
+                    status: "success"
+                });
+            } else res.status(400).json({ message: "duplicate email", status: "failed" });
         }
-        else res.status(400).json({ message: "duplicate user", status: "failed" });
+        else res.status(400).json({ message: "duplicate name", status: "failed" });
 
     } catch (error) {
         res.status(400).json(error.message);
@@ -39,7 +41,7 @@ export const login = async (req, res) => {
             if (await bcrypt.compare(password, user.rows[0].password)) {
                 delete user.rows[0].password;
                 res.status(200).json({
-                    token: jwt.sign({ user: user.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
+                    token: jwt.sign({ user: user.rows[0], }, process.env.JWT, { expiresIn: "40d" }),
                     status: "success"
                 });
             } else res.status(404).json({ message: "incorect credentials", status: "failed" });
@@ -66,8 +68,11 @@ export const getUser = async (req, res) => {
 export const getCurrentUser = async (req, res) => {
     res.status(200).json({ user: req.user, status: "successful" })
 }
+//PATCH AUTH /user/update
+export const updateUser = async (req, res) => {
+    res.status(200).json({ user: req.user, status: "successful" })
+}
 
-export const changeUserRole = async (req, res) => { }
 export const deleteUser = async (req, res) => {
     res.send();
 }

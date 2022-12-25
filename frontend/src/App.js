@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
@@ -6,6 +6,7 @@ import Home from './pages/home';
 import { UserContext } from './context/AppContext';
 
 const App = () => {
+
   const [initial, setInitial] = useState({
     user: JSON.parse(localStorage.getItem("user"))
       ? JSON.parse(localStorage.getItem("user"))
@@ -15,6 +16,7 @@ const App = () => {
     currentPage: "Home",
     isError: false,
     isLoading: false,
+    userPackages: null
   });
 
   return (

@@ -10,11 +10,33 @@
 }
 
 html {
-  /* background-color: #222222 !important; */
   background-color: #171717 !important;
-
 }
 
 body {
   color: white;
 }
+
+.patch {
+  max-width: none;
+}
+
+table {}
+
+.odd {
+  background-color: rgb(39 39 42 / var(--tw-bg-opacity)) !important;
+}
+
+.even {
+  background-color: #1b1b1b;
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(39 39 42 / var(--tw-bg-opacity)) !important;
+}
+
+tr:nth-child(even) {
+  background-color: #1b1b1b;
+}
+
+th {}

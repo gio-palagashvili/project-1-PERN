@@ -16,8 +16,9 @@ const Register = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    username: "",
     passwordR: "",
+    firstName: "",
+    lastName: "",
   });
   const [error, setError] = useState(null);
 
@@ -29,17 +30,20 @@ const Register = () => {
         url: "http://localhost:5000/user/register",
         data: {
           email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
           password: data.password,
-          username: data.username,
         },
       })
         .then((s) => {
           navigate("/login");
         })
         .catch((err) => {
-          console.log(err);
           setData({ ...data, email: "" });
           setError(err.response.data.message);
+          if (err.response.data.message.indexOf("name")) {
+            setData({ ...data, firstName: "", lastName: "" });
+          }
         });
     } else {
       setError("Passwords do not match");
@@ -60,18 +64,37 @@ const Register = () => {
             </p>
           </div>
           <form onSubmit={(e) => handleSubmit(e)} className="max-w-md">
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-              className={
-                error && error.indexOf("length") > -1
-                  ? "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[30%] input-error"
-                  : "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[30%]"
-              }
-              onChange={(e) => handleChange(e)}
-            />
+            <div className="w-full flex">
+              <input
+                type="text"
+                name="firstName"
+                placeholder="first name"
+                required
+                className={
+                  error && error.indexOf("name") > -1
+                    ? "input w-1/2 max-w-md input-xl mb-2 bg-zinc-800 h-[60px] input-error"
+                    : "input w-1/2 max-w-md input-xl mb-2 bg-zinc-800 h-[60px]"
+                }
+                onChange={(e) => handleChange(e)}
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder={
+                  error && error.indexOf("name") > -1
+                    ? "duplicate user"
+                    : "last name"
+                }
+                value={data.lastName}
+                required
+                className={
+                  error && error.indexOf("name") > -1
+                    ? "input w-1/2 max-w-md input-xl mb-2 bg-zinc-800 h-[60px] input-error"
+                    : "input w-1/2 max-w-md input-xl mb-2 bg-zinc-800 h-[60px] ml-1"
+                }
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
             <input
               type="email"
               name="email"
@@ -84,8 +107,8 @@ const Register = () => {
               required
               className={
                 error && error.indexOf("duplicate") > -1
-                  ? "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[30%] input-error"
-                  : "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[30%]"
+                  ? "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[25%] input-error"
+                  : "input w-full max-w-md input-xl mb-2 bg-zinc-800 h-[25%]"
               }
               onChange={(e) => handleChange(e)}
             />
@@ -97,8 +120,8 @@ const Register = () => {
               onChange={(e) => handleChange(e)}
               className={
                 error && error.indexOf("match") > -1
-                  ? "input w-full max-w-md mb-2 bg-zinc-800 h-[30%] input-error"
-                  : "input w-full max-w-md mb-2 bg-zinc-800 h-[30%]"
+                  ? "input w-full max-w-md mb-2 bg-zinc-800 h-[25%] input-error"
+                  : "input w-full max-w-md mb-2 bg-zinc-800 h-[25%]"
               }
             />
             <input
@@ -114,8 +137,8 @@ const Register = () => {
               onChange={(e) => handleChange(e)}
               className={
                 error && error.indexOf("match") > -1
-                  ? "input w-full max-w-md mb-2 bg-zinc-800 h-[30%] input-error"
-                  : "input w-full max-w-md mb-2 bg-zinc-800 h-[30%]"
+                  ? "input w-full max-w-md mb-2 bg-zinc-800 h-[25%] input-error"
+                  : "input w-full max-w-md mb-2 bg-zinc-800 h-[25%]"
               }
             />
             <a

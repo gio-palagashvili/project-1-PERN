@@ -15,8 +15,18 @@ CREATE TABLE users_tbl
 
 CREATE table packages_tbl
 (
+    package_id serial
+        PRIMARY KEY,
     user_id int,
-    name VARCHAR(255) NOT NULL,
-    weight VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_users_tbl FOREign key(user_id) REFERENCES users_tbl(user_id) ON DELETE CASCADE
+    code VARCHAR
+(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    name VARCHAR
+    (255) NOT NULL,
+    weight VARCHAR
+    (255) NOT NULL,
+    CONSTRAINT fk_users_tbl FOREign key
+    (user_id) REFERENCES users_tbl
+    (user_id) ON
+    DELETE CASCADE
 );

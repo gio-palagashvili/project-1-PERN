@@ -3,8 +3,9 @@ import axios from "axios";
 
 const Modal = (props) => {
   const [user, setUser] = useState({
-    username: "",
+    firstName: "",
     email: "",
+    lastName: "",
   });
 
   useEffect(() => {
@@ -16,52 +17,89 @@ const Modal = (props) => {
       })
       .then((data) => {
         const data2 = data.data;
-        setUser({ username: data2.user.username, email: data2.user.email });
+        setUser({
+          email: data2.user.email,
+          firstName: data2.user.firstName,
+          lastName: data2.user.lastName,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const handleClick = () => {
+    var reg =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (user.email.match(reg)) {
+    }
+  };
   return (
-    <div className="modal_2 ">
+    <div className="modal_2">
       <input type="checkbox" id="my-modal" className="modal-toggle" />
-      <div className="modal ">
-        <div className="modal-box bg-[#1B1B1B]">
+      <div className="modal">
+        <div className="modal-box bg-[#1B1B1B] patch w-[90%] xl:w-1/2">
           <h3 className="font-bold text-lg">{props.promptText}</h3>
           <div className="data py-2 h-full w-full">
             <div className="form-control w-full ">
               <label className="label">
-                <span className="label-text">Your Email</span>
+                <span className="label-text">email</span>
               </label>
               <input
                 type="email"
                 name="email"
+                onChange={(e) => handleChange(e)}
                 defaultValue={user.email}
-                className="w-full input-x h-[45px] bg-zinc-800 px-2 rounded-md opacity-30 cursor-not-allowed"
-                disabled
-              />
-              <label className="label">
-                <span className="label-text">Your username</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                defaultValue={user.username}
                 className="input w-full input-x h-[45px] bg-zinc-800 px-2 rounded-md"
-                autoComplete="off"
               />
+              <div className="w-full flex">
+                <div className="w-1/2 mr-2">
+                  <label className="label">
+                    <span className="label-text">first name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    defaultValue={user.firstName}
+                    className="w-full input-x h-[45px] bg-zinc-800 px-2 rounded-md opacity-50 hover:cursor-not-"
+                    autoComplete="off"
+                    disabled
+                  />
+                </div>
+                <div className="w-1/2">
+                  <label className="label">
+                    <span className="label-text">last name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    defaultValue={user.lastName}
+                    className="w-full input-x h-[45px] bg-zinc-800 px-2 rounded-md opacity-50 hover:cursor-not-allowed"
+                    autoComplete="off"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <main
+                tabIndex={0}
+                className="bg-zinc-800 rounded-md mt-3 w-full h-[45px] p-2"
+              ></main>
             </div>
           </div>
           <div className="modal-action">
             <label
               htmlFor="my-modal"
-              className="btn btn-sm btn-error text-[12px] text-white capitalize w-1/2"
+              className="btn btn-sm btn-error text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:text-black"
             >
-              {props.buttonText}
+              close
             </label>
             <label
               htmlFor="my-modal"
-              className="btn btn-sm btn-success text-[12px] text-white capitalize w-1/2"
+              className="btn btn-sm btn-success text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:text-black"
+              onClick={handleClick}
             >
               Save
             </label>
