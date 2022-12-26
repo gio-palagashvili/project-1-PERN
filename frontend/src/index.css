@@ -21,8 +21,6 @@ body {
   max-width: none;
 }
 
-table {}
-
 .odd {
   background-color: rgb(39 39 42 / var(--tw-bg-opacity)) !important;
 }
@@ -38,5 +36,3 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: #1b1b1b;
 }
-
-th {}

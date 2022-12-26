@@ -13,7 +13,7 @@ const App = () => {
       : null,
     message: "",
     pages: ["Home", "Packages", "Profile"],
-    currentPage: "Home",
+    currentPage: "Packages",
     isError: false,
     isLoading: false,
     userPackages: null
