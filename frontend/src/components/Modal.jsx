@@ -7,7 +7,9 @@ const Modal = (props) => {
     email: "",
     lastName: "",
   });
-
+  const [error, setError] = useState({
+    error: null,
+  });
   useEffect(() => {
     axios
       .get("http://localhost:5000/user/me", {
@@ -21,6 +23,7 @@ const Modal = (props) => {
           email: data2.user.email,
           firstName: data2.user.firstName,
           lastName: data2.user.lastName,
+          changed: false,
         });
       })
       .catch((err) => {
@@ -28,12 +31,22 @@ const Modal = (props) => {
       });
   }, []);
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value, changed: true });
   };
   const handleClick = () => {
     var reg =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (user.email.match(reg)) {
+      if (user.changed) {
+        const data = ;
+        axios.patch("http://localhost:5000/user/update", data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+          },
+        });
+      }
+    } else {
+      setError({ error: "Invalid email address" });
     }
   };
   return (
@@ -92,13 +105,14 @@ const Modal = (props) => {
           <div className="modal-action">
             <label
               htmlFor="my-modal"
-              className="btn btn-sm btn-error text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:text-black"
+              className="btn btn-sm btn-error text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:bg-red-500"
             >
               close
             </label>
             <label
-              htmlFor="my-modal"
-              className="btn btn-sm btn-success text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:text-black"
+              htmlFor={!error.error ? "my-modal" : ""}
+              className="btn btn-sm btn-success text-[12px] capitalize w-1/2 bg-transparent border-0 hover:text-black text-white
+               hover:bg-green-500"
               onClick={handleClick}
             >
               Save

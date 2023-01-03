@@ -50,7 +50,7 @@ export const login = async (req, res) => {
         res.json({ message: error.message, status: "error" });
     }
 }
-//POST PROTECTED /user/:id
+//POST PROTECTED /user/:id for admin access
 export const getUser = async (req, res) => {
     if (req.user.role === "admin") {
         const user = await db.query("SELECT * FROM users_tbl WHERE user_id = $1", [req.params.id]);
@@ -66,11 +66,12 @@ export const getUser = async (req, res) => {
 }
 //GET AUTH /user/me
 export const getCurrentUser = async (req, res) => {
-    res.status(200).json({ user: req.user, status: "successful" })
+    res.status(200).json({ user: req.user, status: "successful" });
 }
 //PATCH AUTH /user/update
 export const updateUser = async (req, res) => {
-    res.status(200).json({ user: req.user, status: "successful" })
+
+    res.status(200).json({ user: req.user, status: "successful" });
 }
 
 export const deleteUser = async (req, res) => {
