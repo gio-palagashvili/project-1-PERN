@@ -70,7 +70,10 @@ export const getCurrentUser = async (req, res) => {
 }
 //PATCH AUTH /user/update
 export const updateUser = async (req, res) => {
-
+    const { email } = req.body;
+    if (!email) {
+        res.status(401).json({ message: "Not enough information", status: "failed" });
+    }
     res.status(200).json({ user: req.user, status: "successful" });
 }
 

@@ -6,10 +6,10 @@ const MainPackage = (props) => {
     <>
       <h1 className="text-[#A6ADBA] bold text-4xl font-bold font-mono mb-10 ">
         View your packages
-        <label for="my-modal2" className="block">
+        <label htmlFor="my-modal2" className="block">
           <label
-            className="text-[8.5px] font-sans btn btn-sm btn-info"
-            for="my-modal2"
+            className="text-[8.5px] font-sans btn btn-sm btn-info xl:text-[9.5px]"
+            htmlFor="my-modal2"
           >
             Add a Package
           </label>
@@ -40,20 +40,20 @@ const MainPackage = (props) => {
         </tbody>
       </table>
 
-      <input type="checkbox" id="my-modal2" class="modal-toggle" />
-      <div class="modal">
-        <div class="modal-box bg-[#1B1B1B] patch w-[90%] xl:w-1/2">
-          <h3 class="font-bold text-lg">
+      <input type="checkbox" id="my-modal2" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box bg-[#1B1B1B] patch w-[90%] xl:w-1/2">
+          <h3 className="font-bold text-lg">
             Congratulations random Internet user!
           </h3>
-          <p class="py-4">
+          <p className="py-4">
             You've been selected for a chance to get one year of subscription to
             use Wikipedia for free!
           </p>
-          <div class="modal-action">
+          <div className="modal-action">
             <label
               className="text-[8.5px] font-sans btn btn-sm btn-ghost"
-              for="my-modal2"
+              htmlFor="my-modal2"
             >
               add
             </label>

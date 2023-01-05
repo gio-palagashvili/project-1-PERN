@@ -38,7 +38,9 @@ const Modal = (props) => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (user.email.match(reg)) {
       if (user.changed) {
-        const data = {};
+        const data = {
+          email: user.email,
+        };
         axios.patch("http://localhost:5000/user/update", data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
@@ -95,23 +97,20 @@ const Modal = (props) => {
                   />
                 </div>
               </div>
-              <main
-                tabIndex={0}
-                className="bg-zinc-800 rounded-md mt-3 w-full h-[45px] p-2"
-              ></main>
             </div>
           </div>
           <div className="modal-action">
             <label
               htmlFor="my-modal"
-              className="btn btn-sm btn-error text-[12px] capitalize w-1/2 bg-transparent border-0 text-white hover:bg-red-500"
+              className="btn btn-sm btn-error text-[12px] capitalize w-1/2 bg-transparent border-0 text-white
+               hover:bg-red-500"
             >
               close
             </label>
             <label
               htmlFor={!error.error ? "my-modal" : ""}
-              className="btn btn-sm btn-success text-[12px] capitalize w-1/2 bg-transparent border-0 hover:text-black text-white
-               hover:bg-green-500"
+              className="btn btn-sm btn-success text-[12px] capitalize w-1/2 bg-transparent border-0 hover:text-black 
+              text-white hover:bg-green-500"
               onClick={handleClick}
             >
               Save
