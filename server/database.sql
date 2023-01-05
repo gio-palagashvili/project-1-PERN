@@ -8,7 +8,8 @@ CREATE TABLE todo
 CREATE TABLE users_tbl
 (
     user_id serial PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );

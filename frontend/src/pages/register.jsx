@@ -56,8 +56,11 @@ const Register = () => {
   return (
     <>
       <div className="w-screen h-[90vh] flex justify-center items-center flex-col">
-        <div className="w-1/3 h-[60%] min-w-max flex justify-center bg-[#1b1b1b] flex-col rounded-lg place-content-center items-center m-auto">
-          <div className="text-center -mt-40 mb-6">
+        <div
+          className="w-1/3 h-[75%] min-w-max flex justify-center bg-[#1b1b1b] flex-col rounded-lg
+         place-content-center items-center m-auto"
+        >
+          <div className="text-center -mt-28 mb-6">
             <h1 className="text-3xl">Welcome Back</h1>
             <p className="text-[13px] text-gray-400">
               To create a new account fill in the forms

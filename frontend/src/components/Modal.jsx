@@ -38,7 +38,7 @@ const Modal = (props) => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (user.email.match(reg)) {
       if (user.changed) {
-        const data = ;
+        const data = {};
         axios.patch("http://localhost:5000/user/update", data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
@@ -95,7 +95,6 @@ const Modal = (props) => {
                   />
                 </div>
               </div>
-
               <main
                 tabIndex={0}
                 className="bg-zinc-800 rounded-md mt-3 w-full h-[45px] p-2"

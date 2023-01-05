@@ -6,7 +6,6 @@ import Nav from "../components/Nav";
 import User from "../components/User";
 import Modal from "../components/Modal";
 import MainPackage from "../components/packages/MainPackage";
-
 const Home = () => {
   const { initial, setInitial } = useContext(UserContext);
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ const Home = () => {
       <Nav />
       <Modal initialText="Profile" buttonText="close" promptText="My profile" />
       <div className="packs w-full mt-10">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-[110%]">
           {initial.currentPage === "Packages" ? (
             <MainPackage data={initial.userPackages} />
           ) : null}
