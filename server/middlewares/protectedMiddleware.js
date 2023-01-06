@@ -9,7 +9,7 @@ export const protectedMiddleware = async (req, res, next) => {
             const user = decoded.user;
             const getUser = await db.query("SELECT * FROM users_tbl WHERE user_id = $1", [user.user_id]);
             if (getUser.rowCount == 0) return next(res.status(404).json({ message: "no user found", status: "failed" }));
-            if (getUser.rows[0].role != "admin") return next(res.status(401).json({ message: "Not authorized", status: "failed" }));
+            if (getUser.rows[0].role != "admin") return next(res.status(404).json({ message: "not authorized", status: "failed" }));
             req.user = getUser.rows[0];
         } catch (error) {
             return next(res.status(404).json({ message: error.message, status: "Failed" }));

@@ -1,5 +1,6 @@
+import React, { useState } from "react";
+import PackageModal from "./PackageModal";
 import SinglePackage from "./SinglePackage";
-import React from "react";
 
 const MainPackage = (props) => {
   return (
@@ -22,7 +23,7 @@ const MainPackage = (props) => {
             <th className="bg-[#282828]">Tracking #</th>
             <th className="bg-[#282828]">Weight</th>
             <th className="bg-[#282828]">Status</th>
-            <th className="bg-[#282828]"></th>
+            <th className="bg-[#282828]">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -39,27 +40,7 @@ const MainPackage = (props) => {
             : null}
         </tbody>
       </table>
-
-      <input type="checkbox" id="my-modal2" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box bg-[#1B1B1B] patch w-[90%] xl:w-1/2">
-          <h3 className="font-bold text-lg">
-            Congratulations random Internet user!
-          </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
-          <div className="modal-action">
-            <label
-              className="text-[8.5px] font-sans btn btn-sm btn-ghost"
-              htmlFor="my-modal2"
-            >
-              add
-            </label>
-          </div>
-        </div>
-      </div>
+      <PackageModal />
     </>
   );
 };

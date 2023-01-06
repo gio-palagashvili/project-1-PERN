@@ -36,3 +36,12 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: #1b1b1b;
 }
+
+.slide {
+  transition: 1s;
+  position: absolute;
+  z-index: 200000;
+  opacity: 0;
+  right: 0;
+  bottom: 0;
+}

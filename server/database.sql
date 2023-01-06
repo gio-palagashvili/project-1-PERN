@@ -22,6 +22,7 @@ CREATE table packages_tbl
     code VARCHAR
 (255) NOT NULL,
     status VARCHAR(255) NOT NULL,
+    price int NOT NULL,
     name VARCHAR
     (255) NOT NULL,
     weight VARCHAR
