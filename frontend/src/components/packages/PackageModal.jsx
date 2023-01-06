@@ -6,7 +6,7 @@ const PackageModal = () => {
     name: "",
     weight: 0,
     price: 0,
-    tracking: "",
+    code: "",
   });
   const [error, setError] = useState({ error: null });
 
@@ -30,7 +30,7 @@ const PackageModal = () => {
   const handleSubmit = () => {
     const reg = new RegExp("^[0-9]+$");
 
-    if (packageItem.tracking.length > 6) {
+    if (packageItem.code.length > 6) {
       if (packageItem.name.length > 1) {
         if (reg.test(packageItem.weight) && packageItem.weight != 0) {
           axios
@@ -64,7 +64,7 @@ const PackageModal = () => {
               </label>
               <input
                 className="input w-full input-x h-[45px] bg-zinc-800 px-2 rounded-md"
-                name="tracking"
+                name="code"
                 onChange={(e) => handleChange(e)}
               />
               <div className="w-full flex">

@@ -8,7 +8,7 @@ export const authMiddleware = async (req, res, next) => {
             const decoded = jwt.verify(token, process.env.JWT);
             const user = decoded.user;
             const getUser = await db.query("SELECT * FROM users_tbl WHERE user_id = $1", [user.user_id]);
-            if (getUser.rowCount == 0) return next(res.status(404).json({ message: "no user found", status: "Failed" }));
+            if (getUser.rowCount == 0) return next(res.status(404));
 
             req.user = getUser.rows[0];
         } catch (error) {

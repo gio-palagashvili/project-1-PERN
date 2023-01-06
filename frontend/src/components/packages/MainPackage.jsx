@@ -3,6 +3,13 @@ import PackageModal from "./PackageModal";
 import SinglePackage from "./SinglePackage";
 
 const MainPackage = (props) => {
+  const active = "btn btn-active bg-[#3ABFF8] border-[#3ABFF8] text-black";
+  const { pages, setPages } = useState({
+    cPage: 1,
+    itemPer: 8,
+    itemsNum: props.itemsTotal,
+  });
+
   return (
     <>
       <h1 className="text-[#A6ADBA] bold text-4xl font-bold font-mono mb-10 ">
@@ -40,6 +47,15 @@ const MainPackage = (props) => {
             : null}
         </tbody>
       </table>
+
+      <div className="w-[90%] flex">
+        <div className="btn-group m-auto mt-5">
+          <button className="btn">1</button>
+          <button className={active}>2</button>
+          <button className="btn">3</button>
+          <button className="btn">4</button>
+        </div>
+      </div>
       <PackageModal />
     </>
   );

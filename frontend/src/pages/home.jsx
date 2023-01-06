@@ -19,7 +19,11 @@ const Home = () => {
         },
       })
       .then((data) => {
-        setInitial({ ...initial, userPackages: data.data.packages });
+        setInitial({
+          ...initial,
+          userPackages: data.data.packages,
+          itemsTotal: data.data.amount.rows[0].count,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -40,7 +44,10 @@ const Home = () => {
       <div className="packs w-full mt-10">
         <div className="overflow-x-auto w-[110%]">
           {initial.currentPage === "Packages" ? (
-            <MainPackage data={initial.userPackages} />
+            <MainPackage
+              data={initial.userPackages}
+              itemsTotal={initial.itemsTotal}
+            />
           ) : null}
         </div>
       </div>
