@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Alert from "../common/Alert";
 
 const PackageModal = () => {
   const [packageItem, setPackage] = useState({
@@ -27,6 +28,7 @@ const PackageModal = () => {
       setError({ error: null });
     }, 3000);
   };
+
   const handleSubmit = () => {
     const reg = new RegExp("^[0-9]+$");
 
@@ -42,9 +44,10 @@ const PackageModal = () => {
               },
             })
             .then((data) => {
-              console.log(data);
+              window.location.reload();
             })
             .catch((err) => {
+              handleError(err.response.data.message);
               console.log(err);
             });
         } else handleError("Invalid weight");
@@ -147,27 +150,7 @@ const PackageModal = () => {
           </div>
         </div>
       </div>
-      <div
-        className="alert alert-error shadow-lg w-1/3 mb-3 slide"
-        id="alert-error"
-      >
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current flex-shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>{error.error}</span>
-        </div>
-      </div>
+      <Alert error={error.error} />
     </>
   );
 };

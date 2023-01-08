@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 import User from "../components/User";
 import Modal from "../components/Modal";
 import MainPackage from "../components/packages/MainPackage";
+
 const Home = () => {
   const { initial, setInitial } = useContext(UserContext);
   const navigate = useNavigate();

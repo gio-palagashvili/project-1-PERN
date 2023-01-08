@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 const getAllRecent = async (req, res) => {
     const user = req.user;
     try {
-        const packages = await db.query("SELECT * FROM packages_tbl WHERE user_id = $1 ORDER BY user_id DESC LIMIT 8",
+        const packages = await db.query("SELECT * FROM packages_tbl WHERE user_id = $1 ORDER BY user_id DESC LIMIT 100",
             [user.user_id]);
         const packagesAmount = await db.query("SELECT COUNT(package_id) FROM packages_tbl WHERE user_id = $1",
             [user.user_id]);

@@ -3,8 +3,8 @@ import db from "../config/db.js";
 
 export const authMiddleware = async (req, res, next) => {
     if (req.header('authorization') && req.header('authorization').startsWith("Bearer")) {
-        let token = req.header('authorization').split(" ")[1];
         try {
+            let token = req.header('authorization').split(" ")[1];
             const decoded = jwt.verify(token, process.env.JWT);
             const user = decoded.user;
             const getUser = await db.query("SELECT * FROM users_tbl WHERE user_id = $1", [user.user_id]);

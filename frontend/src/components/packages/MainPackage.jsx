@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../context/AppContext";
 import PackageModal from "./PackageModal";
+import Pages from "./Pages";
 import SinglePackage from "./SinglePackage";
 
 const MainPackage = (props) => {
   const active = "btn btn-active bg-[#3ABFF8] border-[#3ABFF8] text-black";
-  const { pages, setPages } = useState({
+
+  const { initial, setInitial } = useContext(UserContext);
+
+  const [pages, setPages] = useState({
     cPage: 1,
-    itemPer: 8,
+    itemPer: 4,
     itemsNum: props.itemsTotal,
+    index: 4,
   });
+  const setPage = (e) => {
+    setPages({
+      ...pages,
+      cPage: e.target.value,
+      index: e.target.value * pages.itemPer,
+    });
+  };
 
   return (
     <>
-      <h1 className="text-[#A6ADBA] bold text-4xl font-bold font-mono mb-10 ">
+      <h1 className="text-[#A6ADBA] bold text-4xl font-bold font-mono mb-8">
         View your packages
         <label htmlFor="my-modal2" className="block">
           <label
@@ -23,7 +36,7 @@ const MainPackage = (props) => {
           </label>
         </label>
       </h1>
-      <table className="table lg:w-[90%]">
+      <table className="table lg:w-[90%] mb-2">
         <thead>
           <tr>
             <th className="bg-[#282828]">Item Name</th>
@@ -36,26 +49,25 @@ const MainPackage = (props) => {
         <tbody>
           {props.data
             ? props.data.map((pack, index) => {
-                return (
-                  <SinglePackage
-                    data={pack}
-                    key={index}
-                    active={index % 2 !== 0 ? "true" : "false"}
-                  />
-                );
+                if (index < pages.index && index >= pages.index - 4) {
+                  return (
+                    <SinglePackage
+                      data={pack}
+                      key={index}
+                      active={index % 2 !== 0 ? "true" : "false"}
+                    />
+                  );
+                }
               })
             : null}
         </tbody>
       </table>
-
-      <div className="w-[90%] flex">
-        <div className="btn-group m-auto mt-5">
-          <button className="btn">1</button>
-          <button className={active}>2</button>
-          <button className="btn">3</button>
-          <button className="btn">4</button>
-        </div>
-      </div>
+      <Pages
+        active={active}
+        clicked={setPage}
+        items={initial.userPackages ? initial.userPackages : ""}
+        pages={pages.cPage}
+      />
       <PackageModal />
     </>
   );

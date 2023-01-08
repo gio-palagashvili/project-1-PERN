@@ -152,7 +152,7 @@ const Register = () => {
             </a>
             <input
               type="submit"
-              className="btn btn-accent w-full m-1  max-w-md"
+              className="btn btn-info w-full m-1  max-w-md"
               value="Register"
             />
           </form>
