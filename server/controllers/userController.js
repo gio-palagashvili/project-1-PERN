@@ -21,7 +21,7 @@ export const register = async (req, res) => {
                             , [email, password, 'user', firstName, lastName]);
                 // delete createUser.rows[0].password;
                 res.status(200).json({
-                    token: jwt.sign({ user: createUser.rows[0], }, process.env.JWT, { expiresIn: "4d" }),
+                    token: jwt.sign({ user: createUser.rows[0], }, process.env.JWT, { expiresIn: "100d" }),
                     status: "success"
                 });
             } else res.status(400).json({ message: "duplicate email", status: "failed" });
@@ -41,7 +41,7 @@ export const login = async (req, res) => {
             if (await bcrypt.compare(password, user.rows[0].password)) {
                 delete user.rows[0].password;
                 res.status(200).json({
-                    token: jwt.sign({ user: user.rows[0], }, process.env.JWT, { expiresIn: "40d" }),
+                    token: jwt.sign({ user: user.rows[0], }, process.env.JWT, { expiresIn: "140d" }),
                     status: "success"
                 });
             } else res.status(404).json({ message: "incorect credentials", status: "failed" });

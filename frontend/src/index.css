@@ -29,12 +29,12 @@ body {
   background-color: #1b1b1b;
 }
 
-tr:nth-child(odd) {
+tbody:nth-child(odd) {
   background-color: rgb(39 39 42 / var(--tw-bg-opacity)) !important;
 }
 
-tr:nth-child(even) {
-  background-color: #1b1b1b;
+tbody:nth-child(even) {
+  background-color: #1b1b1b !important;
 }
 
 .slide {

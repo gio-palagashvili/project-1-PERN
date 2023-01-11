@@ -1,8 +1,9 @@
 import db from "../config/db.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt"
+// import jwt from "jsonwebtoken";
+import { v4 as uuid } from 'uuid';
 
-//GET /package/me/recent
+
+//GET Curr user only /package/me/recent
 const getAllRecent = async (req, res) => {
     const user = req.user;
     try {
@@ -15,6 +16,7 @@ const getAllRecent = async (req, res) => {
         res.status(400).json({ "message": error.message });
     }
 }
+//POST protectedMiddleware package/create
 const createPackage = async (req, res) => {
     const { name, weight, price, code } = req.body;
     try {
@@ -54,5 +56,55 @@ const createPackage = async (req, res) => {
         console.log(err.message)
     }
 }
+//DELETE protectedMiddleware package/delete
+const deletePackage = async (req, res) => {
+    const { package_id } = req.headers;
+    try {
+        if (!package_id) {
+            res.status(400);
+            throw new Error("Invalid Data");
+        }
+        const deletePackage = await db.query('DELETE FROM packages_tbl WHERE package_id = $1',
+            [package_id]);
+        if (deletePackage.rowCount == 0) {
+            throw new Error("Failed to delete package")
+        }
+        res.status(200).json({
+            message: "Package deleted successfully",
+            status: "success",
+            package_id: package_id
+        })
 
-export { getAllRecent, createPackage }
+    } catch (err) {
+        res.status(400).json({ message: err.message, status: "failed" });
+    }
+}
+//POST createRandomPackages protectedMidlleware package/create/random
+const createRandomPackages = async (req, res) => {
+    let { name, weight, price, code } = {
+        "name": "gio palagashvili",
+        "weight": "22",
+        "price": "22",
+        "code": "12342522"
+    };
+    const a = Math.floor(Math.random() * 9) + 2;
+    try {
+        for (let index = 0; index < a; index++) {
+            weight = Math.floor(Math.random() * 100) + 1;
+            code = uuid().split("-")[0] + uuid().split("-")[1];
+            price = Math.floor(Math.random() * 1000) + 1;
+
+            const insert =
+                await db.query('INSERT INTO packages_tbl(user_id, code, status, name, weight, price, "createdBy") VALUES($1, $2, $3, $4, $5, $6,$7) returning package_id',
+                    [req.user.user_id, code, 'In Transit', name, weight, price, req.user.user_id]);
+        }
+        res.status(201).json({
+            message: `created ${a} packages successfully`,
+            status: "success",
+        });
+
+    } catch (err) {
+        res.status(400).json({ message: err.message, status: "failed" });
+    }
+}
+export { getAllRecent, createPackage, deletePackage, createRandomPackages }

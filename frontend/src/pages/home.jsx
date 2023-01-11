@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/AppContext";
 import axios from "axios";
 import Nav from "../components/Nav";
-import User from "../components/User";
 import Modal from "../components/Modal";
 import MainPackage from "../components/packages/MainPackage";
 
@@ -12,7 +11,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const getPackages = () => {
-    const user = localStorage.getItem("user");
     axios
       .get("http://localhost:5000/package/me/recent", {
         headers: {
